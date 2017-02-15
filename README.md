@@ -4,7 +4,7 @@
 [![Dependency Status](https://david-dm.org/ChrisAlderson/yts-api-pt.svg)](https://david-dm.org/ChrisAlderson/yts-api-pt)
 [![devDependency Status](https://david-dm.org/ChrisAlderson/yts-api-pt/dev-status.svg)](https://david-dm.org/ChrisAlderson/yts-api-pt#info=devDependencies)
 
-A NodeJS wrapper for [MyAnimeList API](https://myanimelist.net/).
+A NodeJS wrapper for [yts.ag](https://yts.ag/).
 
 ## Usage
 
