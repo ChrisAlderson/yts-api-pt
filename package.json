@@ -1,0 +1,30 @@
+{
+  "name": "yts-api-pt",
+  "version": "1.0.0",
+  "description": "A NodeJS wrapper for yts.ag",
+  "dependencies": {
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha --timeout 15000 --reporter spec"
+  },
+  "engines": {
+    "node": ">=6.3.0"
+  },
+  "keywords": [
+    "yts",
+    "movies",
+    "api",
+    "torrent"
+  ],
+  "main": "yts-api-pt.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChrisAlderson/yts-api-pt.git"
+  }
+}
