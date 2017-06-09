@@ -1,16 +1,12 @@
 'use strict';
 
-const request = require('request');
-
-const defaultOptions = {
-  baseUrl: 'https://yts.ag/api/v2/',
-  timeout: 4 * 1000
-};
+const got = require('got');
+const querystring = require('querystring');
 
 module.exports = class YTS {
 
-  constructor({options = defaultOptions, debug = false} = {}) {
-    this._request = request.defaults(options);
+  constructor({baseUrl = 'https://yts.ag/api/v2/', debug = false} = {}) {
+    this._baseUrl = baseUrl;
     this._debug = debug;
 
     this._qualities = {
@@ -35,21 +31,14 @@ module.exports = class YTS {
     };
   }
 
-  _get(uri, qs, retry = true) {
-    if (this._debug) console.warn(`Making request to '${uri}', qs: '${JSON.parse(qs)}'`);
-    return new Promise((resolve, reject) => {
-      return this._request.get({ uri, qs }, (err, res ,body) => {
-        if (err && retry) {
-          return resolve(this._get(uri, qs, false));
-        } else if (err) {
-          return reject(err);
-        } else if (!body || res.statusCode >= 400) {
-          return reject(new Error(`No data found on uri: '${uri}', qs: '${JSON.parse(qs)}', statuscode: ${res.statusCode}`));
-        } else {
-          return resolve(JSON.parse(body));
-        }
-      });
-    });
+  _get(uri, query = {}) {
+    if (this._debug)
+      console.warn(`Making request to: '${uri}${querystring.stringify(query)}'`);
+
+    return got.get(`${this._baseUrl}/${uri}`, {
+      query,
+      json: true
+    }).then(({body}) => body);
   }
 
   getMovies({limit = 20, page = 1, quality = 'All', minimum_rating = 0, query_term, genre, sorty_by = 'date_added', order_by = 'desc', with_rt_ratings = false} = {}) {
