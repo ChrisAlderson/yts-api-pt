@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "A NodeJS wrapper for yts.ag",
   "dependencies": {
-    "request": "^2.79.0"
+    "got": "^7.0.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2"
   },
   "license": "MIT",
   "scripts": {
