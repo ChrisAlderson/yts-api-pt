@@ -15,10 +15,10 @@ npm install --save yts-api-pt
 
 #### Initialize
 ```js
-const YTS = require('yts-api-pt');
+const YTS = require('yts-api-pt')
 
 // Options are the request default options.
-const yts = new YTS([{options, debug}]);
+const yts = new YTS([{options, debug}])
 ```
 
 #### Example usage
@@ -36,7 +36,7 @@ yts.getMovies({
   order_by: 'desc',
   with_rt_ratings: true
 }).then(res => console.log(res))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 
 ```
 
@@ -47,21 +47,21 @@ yts.getMovie({
   with_images: true,
   with_cast: true
 }).then(res => console.log(res))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 ```
 
 **getSuggestions:**
 ```js
 yts.getSuggestions(15)
   .then(res => console.log(res))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 ```
 
 **getParentalGuides:**
 ```js
 yts.getParentalGuides(15)
   .then(res => console.log(res))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 ```
 
 ## Output
