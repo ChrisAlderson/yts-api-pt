@@ -1,6 +1,7 @@
 # yts-api-pt
 
 [![Build Status](https://travis-ci.org/ChrisAlderson/yts-api-pt.svg?branch=master)]()
+[![Coverage Status](https://coveralls.io/repos/github/ChrisAlderson/yts-api-pt/badge.svg?branch=master)](https://coveralls.io/github/ChrisAlderson/yts-api-pt?branch=master)
 [![Dependency Status](https://david-dm.org/ChrisAlderson/yts-api-pt.svg)](https://david-dm.org/ChrisAlderson/yts-api-pt)
 [![devDependency Status](https://david-dm.org/ChrisAlderson/yts-api-pt/dev-status.svg)](https://david-dm.org/ChrisAlderson/yts-api-pt#info=devDependencies)
 
