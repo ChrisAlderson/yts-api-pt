@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-const got = require('got');
-const querystring = require('querystring');
+const got = require('got')
+const querystring = require('querystring')
 
 module.exports = class YTS {
 
   constructor({baseUrl = 'https://yts.ag/api/v2/', debug = false} = {}) {
-    this._baseUrl = baseUrl;
-    this._debug = debug;
+    this._baseUrl = baseUrl
+    this._debug = debug
 
-    this._qualities = {
+    YTS._qualities = {
       'All': 'All',
       '720p': '720p',
       '1080p': '1080p',
       '3D': '3D'
-    };
-    this._sort_by = {
+    }
+    YTS._sortBy = {
       title: 'title',
       year: 'year',
       rating: 'rating',
@@ -23,51 +23,111 @@ module.exports = class YTS {
       seeds: 'seeds',
       download_count: 'download_count',
       like_count: 'like_count',
-      date_added: 'date_added',
-    };
-    this._order_by = {
+      date_added: 'date_added'
+    }
+    YTS._orderBy = {
       desc: 'desc',
       asc: 'asc'
-    };
+    }
   }
 
   _get(uri, query = {}) {
-    if (this._debug)
-      console.warn(`Making request to: '${uri}${querystring.stringify(query)}'`);
+    if (this._debug) {
+      console.warn(`Making request to: '${uri}${querystring.stringify(query)}'`)
+    }
 
     return got.get(`${this._baseUrl}/${uri}`, {
       query,
       json: true
-    }).then(({body}) => body);
+    }).then(({body}) => body)
   }
 
-  getMovies({limit = 20, page = 1, quality = 'All', minimum_rating = 0, query_term, genre, sorty_by = 'date_added', order_by = 'desc', with_rt_ratings = false} = {}) {
-    if (limit < 1 || limit > 50) throw new Error(`${limit} is not a valid value for limit!`);
-    if (!this._qualities[quality]) throw new Error(`${quality} is not a valid value for quality!`);
-    if (minimum_rating < 0 || minimum_rating > 9) throw new Error(`${minimum_rating} is not a valid value for minimum_rating`);
-    if (!this._sort_by[sorty_by]) throw new Error(`${sorty_by} is not a valid value for sorty_by!`);
-    if (!this._order_by[order_by]) throw new Error(`${order_by} is not a valid value for order_by!`);
-    if (typeof(with_rt_ratings) !== 'boolean') throw new Error(`${with_rt_ratings} is not a valid value for with_rt_ratings!`);
+  getMovies({
+    limit = 20,
+    page = 1,
+    quality = 'All',
+    minimumRating = 0,
+    queryTerm,
+    genre,
+    sortyBy = 'date_added',
+    orderBy = 'desc',
+    withRtRatings = false
+  } = {}) {
+    if (limit < 1 || limit > 50) {
+      throw new Error(`${limit} is not a valid value for limit!`)
+    }
 
-    return this._get('list_movies.json', { limit, page, quality, minimum_rating, query_term, genre, sorty_by, order_by, with_rt_ratings });
+    if (!YTS._qualities[quality]) {
+      throw new Error(`${quality} is not a valid value for quality!`)
+    }
+
+    if (minimumRating < 0 || minimumRating > 9) {
+      throw new Error(`${minimumRating} is not a valid value for minimumRating!`)
+    }
+
+    if (!YTS._sortBy[sortyBy]) {
+      throw new Error(`${sortyBy} is not a valid value for sortyBy!`)
+    }
+
+    if (!YTS._orderBy[orderBy]) {
+      throw new Error(`${orderBy} is not a valid value for orderBy!`)
+    }
+
+    if (typeof withRtRatings !== 'boolean') {
+      throw new Error(`${withRtRatings} is not a valid value for withRtRatings!`)
+    }
+
+    return this._get('list_movies.json', {
+      limit,
+      page,
+      quality,
+      minimum_rating: minimumRating,
+      query_term: queryTerm,
+      genre,
+      sorty_by: sortyBy,
+      order_by: orderBy,
+      with_rt_ratings: withRtRatings
+    })
   }
 
-  getMovie({movie_id, with_images = false, with_cast = false} = {}) {
-    if (!movie_id || typeof(movie_id) !== 'number') throw new Error(`${movie_id} is not a valid value for movie_id!`);
-    if (typeof(with_images) !== 'boolean') throw new Error(`${with_images} is not a valid value for with_images!`);
-    if (typeof(with_cast) !== 'boolean') throw new Error(`${with_cast} is not a valid value for with_cast!`);
+  getMovie({movieId, withImages = false, withCast = false} = {}) {
+    if (!movieId || typeof movieId !== 'number') {
+      throw new Error(`${movieId} is not a valid value for movieId!`)
+    }
 
-    return this._get('movie_details.json', { movie_id, with_images, with_cast});
+    if (typeof withImages !== 'boolean') {
+      throw new Error(`${withImages} is not a valid value for withImages!`)
+    }
+
+    if (typeof withCast !== 'boolean') {
+      throw new Error(`${withCast} is not a valid value for withCast!`)
+    }
+
+    return this._get('movie_details.json', {
+      movie_id: movieId,
+      with_images: withImages,
+      with_cast: withCast
+    })
   }
 
-  getSuggestions(movie_id) {
-    if (!movie_id || typeof(movie_id) !== 'number') throw new Error(`${movie_id} is not a valid value for movie_id!`);
-    return this._get('movie_suggestions.json', { movie_id });
+  getSuggestions(movieId) {
+    if (!movieId || typeof movieId !== 'number') {
+      throw new Error(`${movieId} is not a valid value for movieId!`)
+    }
+
+    return this._get('movie_suggestions.json', {
+      movie_id: movieId
+    })
   }
 
-  getParentalGuides(movie_id) {
-    if (!movie_id || typeof(movie_id) !== 'number') throw new Error(`${movie_id} is not a valid value for movie_id!`);
-    return this._get('movie_parental_guides.json', { movie_id });
+  getParentalGuides(movieId) {
+    if (!movieId || typeof movieId !== 'number') {
+      throw new Error(`${movieId} is not a valid value for movieId!`)
+    }
+
+    return this._get('movie_parental_guides.json', {
+      movie_id: movieId
+    })
   }
 
 }
