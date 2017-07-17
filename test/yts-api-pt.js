@@ -1,56 +1,118 @@
-'use strict';
+'use strict'
 
-const { assert } = require('chai');
+const { assert, expect } = require('chai')
 
-const YTS = require('../yts-api-pt');
+const YTS = require('../yts-api-pt')
 
 describe('YTS.ag', () => {
 
-  let yts;
-  before(() => {
-    yts = new YTS();
-  });
+  let yts
 
-  it('getMovies', done => {
+  before(() => {
+    console.warn = () => {}
+    yts = new YTS({
+      debug: true
+    })
+  })
+
+  it('should get multiple movies', done => {
     yts.getMovies({
       limit: 20,
       page: 1,
       quality: 'All',
-      minimum_rating: 0,
-      query_term: 'inception',
+      minimumRating: 0,
+      queryTerm: 'inception',
       genre: 'action',
-      sort_by: 'date_added',
-      order_by: 'desc',
-      with_rt_ratings: true
+      sortBy: 'date_added',
+      orderBy: 'desc',
+      withRtRatings: true
     }).then(res => {
-      assert.isObject(res);
-      done();
-    }).catch(err => done(err));
-  });
+      // TODO: replace with `expect`.
+      assert.isObject(res)
 
-  it('getMovie', done => {
+      done()
+    }).catch(done)
+  })
+
+  it('should throw an error when getting movies', () => {
+    expect(yts.getMovies.bind(yts.getMovies, {
+      limit: -1
+    })).to.throw('-1 is not a valid value for limit!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      limit: 51
+    })).to.throw('51 is not a valid value for limit!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      quality: 'failing'
+    })).to.throw('failing is not a valid value for quality!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      minimumRating: -1
+    })).to.throw('-1 is not a valid value for minimumRating!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      minimumRating: 10
+    })).to.throw('10 is not a valid value for minimumRating!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      sortyBy: 'failing'
+    })).to.throw('failing is not a valid value for sortyBy!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      orderBy: 'failing'
+    })).to.throw('failing is not a valid value for orderBy!')
+    expect(yts.getMovies.bind(yts.getMovies, {
+      withRtRatings: 'failing'
+    })).to.throw('failing is not a valid value for withRtRatings!')
+  })
+
+  it('should get a movie with images and cast', done => {
     yts.getMovie({
-      movie_id: 15,
-      with_images: true,
-      with_cast: true
+      movieId: 15,
+      withImages: true,
+      withCast: true
     }).then(res => {
-      assert.isObject(res);
-      done();
-    }).catch(err => done(err));
-  });
+      // TODO: replace with `expect`.
+      assert.isObject(res)
 
-  it('getSuggestions', done => {
+      done()
+    }).catch(done)
+  })
+
+  it('should throw an error when getting a movie', () => {
+    expect(yts.getMovie.bind(yts.getMovie, {
+      movieId: 'failing'
+    })).to.throw('failing is not a valid value for movieId!')
+    expect(yts.getMovie.bind(yts.getMovie, {
+      movieId: 15,
+      withImages: 'failing'
+    })).to.throw('failing is not a valid value for withImages!')
+    expect(yts.getMovie.bind(yts.getMovie, {
+      movieId: 15,
+      withImages: true,
+      withCast: 'failing'
+    })).to.throw('failing is not a valid value for withCast!')
+  })
+
+  it('should get the suggestions of a movie', done => {
     yts.getSuggestions(15).then(res => {
-      assert.isObject(res);
-      done();
-    }).catch(err => done(err));
-  });
+      // TODO: replace with `expect`.
+      assert.isObject(res)
 
-  it('getParentalGuides', done => {
+      done()
+    }).catch(done)
+  })
+
+  it('should throw an error when getting the suggestions of a movie', () => {
+    expect(yts.getSuggestions).to.throw('is not a valid value for movieId!')
+  })
+
+  it('should get the parental guide of a movie', done => {
     yts.getParentalGuides(15).then(res => {
-      assert.isObject(res);
-      done();
-    }).catch(err => done(err));
-  });
+      // TODO: replace with `expect`.
+      assert.isObject(res)
 
-});
+      done()
+    }).catch(done)
+  })
+
+  it('should throw an error when getting the parental guide of a movie', () => {
+    expect(yts.getParentalGuides).to.throw('is not a valid value for movieId!')
+  })
+
+})
