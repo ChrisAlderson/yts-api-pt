@@ -1,6 +1,6 @@
 'use strict'
 
-const { assert, expect } = require('chai')
+const { expect } = require('chai')
 
 const YTS = require('../yts-api-pt')
 
@@ -15,6 +15,21 @@ describe('YTS.ag', () => {
     })
   })
 
+  function testStatusAttributes (res) {
+    expect(res.status).to.be.a('string')
+    expect(res.status).to.equal('ok')
+    expect(res.status_message).to.be.a('string')
+    expect(res.status_message).to.equal('Query was successful')
+  }
+
+  function testMetaAttributes (meta) {
+    expect(meta.server_time).to.be.a('number')
+    expect(meta.server_timezone).to.be.a('string')
+    expect(meta.api_version).to.be.a('number')
+    expect(meta.api_version).to.equal(2)
+    expect(meta.execution_time).to.be.a('string')
+  }
+
   it('should get multiple movies', done => {
     yts.getMovies({
       limit: 20,
@@ -27,8 +42,25 @@ describe('YTS.ag', () => {
       orderBy: 'desc',
       withRtRatings: true
     }).then(res => {
-      // TODO: replace with `expect`.
-      assert.isObject(res)
+      expect(res).to.be.an('object')
+      testStatusAttributes(res)
+
+      const { data } = res
+      expect(data).to.be.an('object')
+      expect(data.movie_count).to.be.a('number')
+      expect(data.movie_count).to.equal(1)
+      expect(data.limit).to.be.a('number')
+      expect(data.limit).to.equal(20)
+      expect(data.page_number).to.be.a('number')
+      expect(data.page_number).to.equal(1)
+      expect(data.movies).to.be.an('array')
+      expect(data.movies.length).to.be.at.least(1)
+
+      const random = Math.floor(Math.random() * data.movies.length)
+      expect(data.movies[random]).to.be.an('object')
+
+      const meta = res['@meta']
+      testMetaAttributes(meta)
 
       done()
     }).catch(done)
@@ -62,13 +94,21 @@ describe('YTS.ag', () => {
   })
 
   it('should get a movie with images and cast', done => {
+    yts._debug = false
     yts.getMovie({
       movieId: 15,
       withImages: true,
       withCast: true
     }).then(res => {
-      // TODO: replace with `expect`.
-      assert.isObject(res)
+      expect(res).to.be.an('object')
+      testStatusAttributes(res)
+
+      const { data } = res
+      expect(data).to.be.an('object')
+      expect(data.movie).to.be.an('object')
+
+      const meta = res['@meta']
+      testMetaAttributes(meta)
 
       done()
     }).catch(done)
@@ -91,8 +131,17 @@ describe('YTS.ag', () => {
 
   it('should get the suggestions of a movie', done => {
     yts.getSuggestions(15).then(res => {
-      // TODO: replace with `expect`.
-      assert.isObject(res)
+      expect(res).to.be.an('object')
+      testStatusAttributes(res)
+
+      const { data } = res
+      expect(data).to.be.an('object')
+      expect(data.movie_count).to.be.a('number')
+      expect(data.movies).to.be.an('array')
+      expect(data.movies.length).to.be.at.least(1)
+
+      const meta = res['@meta']
+      testMetaAttributes(meta)
 
       done()
     }).catch(done)
@@ -104,8 +153,17 @@ describe('YTS.ag', () => {
 
   it('should get the parental guide of a movie', done => {
     yts.getParentalGuides(15).then(res => {
-      // TODO: replace with `expect`.
-      assert.isObject(res)
+      expect(res).to.be.an('object')
+      testStatusAttributes(res)
+
+      const { data } = res
+      expect(data).to.be.an('object')
+      expect(data.parental_guide_count).to.be.a('number')
+      expect(data.parental_guides).to.be.an('array')
+      expect(data.parental_guides.length).to.be.at.least(1)
+
+      const meta = res['@meta']
+      testMetaAttributes(meta)
 
       done()
     }).catch(done)
