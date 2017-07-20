@@ -1,7 +1,6 @@
 'use strict'
 
-// Import the necessary modules.
-const got = require('got')
+// Import the necessary modules.const got = require('got')
 const { stringify } = require('querystring')
 
 /**
@@ -27,7 +26,7 @@ const { stringify } = require('querystring')
  * the data.
  */
 
-/** 
+/**
  * A movie from yts.ag.
  * @typedef {Object} Movie
  * @property {!number} id The id of the movie.
@@ -104,18 +103,8 @@ export default class YtsApi {
    * @param {?boolean} [debug=false] - Show extra output.
    */
   constructor({baseUrl = 'https://yts.ag/api/v2/', debug = false} = {}) {
-    /**
-     * The base url of yts.
-     * @type {string}
-     */
-    this._baseUrl = baseUrl
-
-    /**
-     * Show extra output.
-     * @type {boolean}
-     */
-    this._debug = debug
-
+    /**     * The base url of yts.     * @type {string}     */    this._baseUrl = baseUrl
+    /**     * Show extra output.     * @type {boolean}     */    this._debug = debug
     /**
      * The available qualities for movies.
      * @type Object
@@ -152,31 +141,20 @@ export default class YtsApi {
     }
   }
 
-  /**
-   * Make a get request to yts.ag.
-   * @param {!string} endpoint - The endpoint to make the request to.
-   * @param {!Object} [query] - The querystring for the request.
-   * @returns {Promise<Function, void>} - The response body wrapped in cheerio.
-   */
-  _get(endpoint, query) {
-    const url = `${this._baseUrl}${endpoint}`
-
-    if (this._debug) {
-      console.warn(`Making request to: '${url}?${stringify(query)}'`)
-    }
-
+  /**   * Make a get request to yts.ag.   * @param {!string} endpoint - The endpoint to make the request to.   * @param {!Object} [query] - The querystring for the request.
+   * @returns {Promise<Function, void>} - The response body wrapped in cheerio.   */  _get(endpoint, query) {    const url = `${this._baseUrl}${endpoint}`
+    if (this._debug) {      console.warn(`Making request to: '${url}?${stringify(query)}'`)    }
     return got.get(`${this._baseUrl}/${endpoint}`, {
       query,
       json: true
     }).then(({body}) => body)
   }
-
   /**
    * Get a list of movies.
    * @param {!Object} query={} - The query object to be send to yts.
    * @param {!number} [config.limit=20] - Limit the amount of results.
    * @param {!number} [config.page=1] - Which page to get the results from.
-   * @param {!string} [config.quality=All] - Search for certain qualities of 
+   * @param {!string} [config.quality=All] - Search for certain qualities of
    * torrents.
    * @param {!number} [config.minimumRating=0] - The minimum required rating
    * for a movie.
@@ -237,7 +215,7 @@ export default class YtsApi {
   }
 
   /**
-   * Get details on a movie. 
+   * Get details on a movie.
    * @param {!Object} query={} - The query object to be send to yts.
    * @param {!number} query.movieId - The movie id of the movie you want to
    * get.
@@ -284,7 +262,8 @@ export default class YtsApi {
    * Get the parental guides on a movie.
    * @param {!number} movieId - The id of the movie you want the parental
    * quides on.
-   * @returns {Promise<Response, undefined>} - An object with the parental guide.
+   * @returns {Promise<Response, undefined>} - An object with the parental
+   * guide.
    */
   getParentalGuides(movieId) {
     if (!movieId || typeof movieId !== 'number') {
