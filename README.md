@@ -16,10 +16,12 @@ npm install --save yts-api-pt
 
 #### Initialize
 ```js
-const YTS = require('yts-api-pt')
+const YtsApi = require('eztv-api-pt')
 
-// Options are the request default options.
-const yts = new YTS([{options, debug}])
+const yts = new YtsApi({[
+  baseUrl, // The base url of yts. Defaults to 'https://yts.ag/'
+  debug // Show extra output. Defaults to 'false'
+]})
 ```
 
 #### Example usage
