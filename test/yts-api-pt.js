@@ -20,12 +20,12 @@ describe('YtsApi', () => {
   before(() => {
     // Disable the warn logging function to testing.
     console.warn = () => {}
-    yts = new Yts({
+    yts = new YtsApi({
       debug: true
     })
   })
 
-   /**
+  /**
    * Test the status attributes.
    * @param {Object} res - The status to test.
    * @return {undefined}
@@ -37,7 +37,7 @@ describe('YtsApi', () => {
     expect(res.status_message).to.equal('Query was successful')
   }
 
-   /**
+  /**
    * Test the meta attributes.
    * @param {Object} res - The meta to test.
    * @return {undefined}
@@ -48,6 +48,33 @@ describe('YtsApi', () => {
     expect(meta.api_version).to.be.a('number')
     expect(meta.api_version).to.equal(2)
     expect(meta.execution_time).to.be.a('string')
+  }
+
+  /**
+   * Test the result of the `getMovies` method.
+   * @param {Object} res - The result of a `getMovies` method call.
+   * @returns {undefined}
+   */
+  function testGetMoviesResult(res) {
+    expect(res).to.be.an('object')
+    testStatusAttributes(res)
+
+    const { data } = res
+    expect(data).to.be.an('object')
+    expect(data.movie_count).to.be.a('number')
+    expect(data.movie_count).to.be.at.least(1)
+    expect(data.limit).to.be.a('number')
+    expect(data.limit).to.equal(20)
+    expect(data.page_number).to.be.a('number')
+    expect(data.page_number).to.be.at.least(1)
+    expect(data.movies).to.be.an('array')
+    expect(data.movies.length).to.be.at.least(1)
+
+    const random = Math.floor(Math.random() * data.movies.length)
+    expect(data.movies[random]).to.be.an('object')
+
+    const meta = res['@meta']
+    testMetaAttributes(meta)
   }
 
   /** @test {YtsApi#getMovies} */
@@ -63,26 +90,10 @@ describe('YtsApi', () => {
       orderBy: 'desc',
       withRtRatings: true
     }).then(res => {
-      expect(res).to.be.an('object')
-      testStatusAttributes(res)
-
-      const { data } = res
-      expect(data).to.be.an('object')
-      expect(data.movie_count).to.be.a('number')
-      expect(data.movie_count).to.equal(1)
-      expect(data.limit).to.be.a('number')
-      expect(data.limit).to.equal(20)
-      expect(data.page_number).to.be.a('number')
-      expect(data.page_number).to.equal(1)
-      expect(data.movies).to.be.an('array')
-      expect(data.movies.length).to.be.at.least(1)
-
-      const random = Math.floor(Math.random() * data.movies.length)
-      expect(data.movies[random]).to.be.an('object')
-
-      const meta = res['@meta']
-      testMetaAttributes(meta)
-
+      testGetMoviesResult(res)
+      return yts.getMovies()
+    }).then(res => {
+      testGetMoviesResult(res)
       done()
     }).catch(done)
   })
@@ -117,7 +128,7 @@ describe('YtsApi', () => {
 
   /** @test {YtsApi#getMovie} */
   it('should get a movie with images and cast', done => {
-    yts._debug = false
+    yts = new YtsApi()
     yts.getMovie({
       movieId: 15,
       withImages: true,
