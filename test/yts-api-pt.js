@@ -1,28 +1,48 @@
 'use strict'
 
+/* eslint-disable no-unused-expressions */
+// Import the necessary modules.
 const { expect } = require('chai')
+const YtsApi = require('../yts-api-pt')
 
-const YTS = require('../yts-api-pt')
-
-describe('YTS.ag', () => {
-
+/** @test {YtsApi} */
+describe('YtsApi', () => {
+  /**
+   * The YtsApi instance.
+   * @type {YtsApi}
+   */
   let yts
 
+  /**
+   * Hook for setting up the YtsApi tests.
+   * @type {Function}
+   */
   before(() => {
+    // Disable the warn logging function to testing.
     console.warn = () => {}
-    yts = new YTS({
+    yts = new Yts({
       debug: true
     })
   })
 
-  function testStatusAttributes (res) {
+   /**
+   * Test the status attributes.
+   * @param {Object} res - The status to test.
+   * @return {undefined}
+   */
+  function testStatusAttributes(res) {
     expect(res.status).to.be.a('string')
     expect(res.status).to.equal('ok')
     expect(res.status_message).to.be.a('string')
     expect(res.status_message).to.equal('Query was successful')
   }
 
-  function testMetaAttributes (meta) {
+   /**
+   * Test the meta attributes.
+   * @param {Object} res - The meta to test.
+   * @return {undefined}
+   */
+  function testMetaAttributes(meta) {
     expect(meta.server_time).to.be.a('number')
     expect(meta.server_timezone).to.be.a('string')
     expect(meta.api_version).to.be.a('number')
@@ -30,6 +50,7 @@ describe('YTS.ag', () => {
     expect(meta.execution_time).to.be.a('string')
   }
 
+  /** @test {YtsApi#getMovies} */
   it('should get multiple movies', done => {
     yts.getMovies({
       limit: 20,
@@ -66,6 +87,7 @@ describe('YTS.ag', () => {
     }).catch(done)
   })
 
+  /** @test {YtsApi#getMovies} */
   it('should throw an error when getting movies', () => {
     expect(yts.getMovies.bind(yts.getMovies, {
       limit: -1
@@ -93,6 +115,7 @@ describe('YTS.ag', () => {
     })).to.throw('failing is not a valid value for withRtRatings!')
   })
 
+  /** @test {YtsApi#getMovie} */
   it('should get a movie with images and cast', done => {
     yts._debug = false
     yts.getMovie({
@@ -114,6 +137,7 @@ describe('YTS.ag', () => {
     }).catch(done)
   })
 
+  /** @test {YtsApi#getMovie} */
   it('should throw an error when getting a movie', () => {
     expect(yts.getMovie.bind(yts.getMovie, {
       movieId: 'failing'
@@ -129,6 +153,7 @@ describe('YTS.ag', () => {
     })).to.throw('failing is not a valid value for withCast!')
   })
 
+  /** @test {YtsApi#getSuggestions} */
   it('should get the suggestions of a movie', done => {
     yts.getSuggestions(15).then(res => {
       expect(res).to.be.an('object')
@@ -147,10 +172,12 @@ describe('YTS.ag', () => {
     }).catch(done)
   })
 
+  /** @test {YtsApi#getSuggestions} */
   it('should throw an error when getting the suggestions of a movie', () => {
     expect(yts.getSuggestions).to.throw('is not a valid value for movieId!')
   })
 
+  /** @test {YtsApi#getParentalGuides} */
   it('should get the parental guide of a movie', done => {
     yts.getParentalGuides(15).then(res => {
       expect(res).to.be.an('object')
@@ -169,8 +196,8 @@ describe('YTS.ag', () => {
     }).catch(done)
   })
 
+  /** @test {YtsApi#getParentalGuides} */
   it('should throw an error when getting the parental guide of a movie', () => {
     expect(yts.getParentalGuides).to.throw('is not a valid value for movieId!')
   })
-
 })
