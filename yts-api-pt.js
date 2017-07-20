@@ -93,8 +93,7 @@ const { stringify } = require('querystring')
  * A NodeJS wrapper for yts.ag.
  * @type {YtsApi}
  */
-// module.exports = class YtsApi {
-export default class YtsApi {
+module.exports = class YtsApi {
 
   /**
    * Create a new instance of the module.
@@ -142,7 +141,7 @@ export default class YtsApi {
   }
 
   /**   * Make a get request to yts.ag.   * @param {!string} endpoint - The endpoint to make the request to.   * @param {!Object} [query] - The querystring for the request.
-   * @returns {Promise<Function, void>} - The response body wrapped in cheerio.   */  _get(endpoint, query) {    const url = `${this._baseUrl}${endpoint}`
+   * @returns {Promise<Function, undefined>} - The response body wrapped in   * cheerio.   */  _get(endpoint, query) {    const url = `${this._baseUrl}${endpoint}`
     if (this._debug) {      console.warn(`Making request to: '${url}?${stringify(query)}'`)    }
     return got.get(`${this._baseUrl}/${endpoint}`, {
       query,
@@ -164,7 +163,8 @@ export default class YtsApi {
    * @param {!string} [config.orderBy=desc] - Order ascending or descending.
    * @param {?boolean} [config.withRtRatings=false] - Adds Rotten Tomatoes
    * ratings to the result.
-   * @returns {Promise<Array<Reponse>, undefined>} -  A list of movies from yts.
+   * @returns {Promise<Array<Response>, undefined>} -  A list of movies from
+   * yts.
    */
   getMovies({
     limit = 20,
@@ -216,14 +216,14 @@ export default class YtsApi {
 
   /**
    * Get details on a movie.
-   * @param {!Object} query={} - The query object to be send to yts.
+   * @param {!Object} query - The query object to be send to yts.
    * @param {!number} query.movieId - The movie id of the movie you want to
    * get.
    * @param {?boolean} [query.withImages=false] - Adds images to results.
    * @param {?boolean} [query.withCast=false] - Adds cast to results.
-   * @returns {Promise<Reponse, undefined>} - A movie from yts.
+   * @returns {Promise<Response, undefined>} - A movie from yts.
    */
-  getMovie({movieId, withImages = false, withCast = false} = {}) {
+  getMovie({movieId, withImages = false, withCast = false}) {
     if (!movieId || typeof movieId !== 'number') {
       throw new Error(`${movieId} is not a valid value for movieId!`)
     }
