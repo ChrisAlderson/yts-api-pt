@@ -141,7 +141,7 @@ module.exports = class YtsApi {
   }
 
   /**   * Make a get request to yts.ag.   * @param {!string} endpoint - The endpoint to make the request to.   * @param {!Object} [query] - The querystring for the request.
-   * @returns {Promise<Function, undefined>} - The response body wrapped in   * cheerio.   */  _get(endpoint, query) {    const url = `${this._baseUrl}${endpoint}`
+   * @returns {Promise<Response, Error>} - The response body wrapped in   * cheerio.   */  _get(endpoint, query) {    const url = `${this._baseUrl}${endpoint}`
     if (this._debug) {      console.warn(`Making request to: '${url}?${stringify(query)}'`)    }
     return got.get(`${this._baseUrl}/${endpoint}`, {
       query,
@@ -163,8 +163,7 @@ module.exports = class YtsApi {
    * @param {!string} [config.orderBy=desc] - Order ascending or descending.
    * @param {?boolean} [config.withRtRatings=false] - Adds Rotten Tomatoes
    * ratings to the result.
-   * @returns {Promise<Array<Response>, undefined>} -  A list of movies from
-   * yts.
+   * @returns {Promise<Array<Response>, Error>} -  A list of movies from yts.
    */
   getMovies({
     limit = 20,
@@ -221,7 +220,7 @@ module.exports = class YtsApi {
    * get.
    * @param {?boolean} [query.withImages=false] - Adds images to results.
    * @param {?boolean} [query.withCast=false] - Adds cast to results.
-   * @returns {Promise<Response, undefined>} - A movie from yts.
+   * @returns {Promise<Response, Error>} - A movie from yts.
    */
   getMovie({movieId, withImages = false, withCast = false}) {
     if (!movieId || typeof movieId !== 'number') {
@@ -246,7 +245,7 @@ module.exports = class YtsApi {
   /**
    * Get suggestions on a movie.
    * @param {!number} movieId - The id of the movie you want suggestions on.
-   * @returns {Promise<Response, undefined>} - An object with suggested movies.
+   * @returns {Promise<Response, Error>} - An object with suggested movies.
    */
   getSuggestions(movieId) {
     if (!movieId || typeof movieId !== 'number') {
@@ -262,8 +261,7 @@ module.exports = class YtsApi {
    * Get the parental guides on a movie.
    * @param {!number} movieId - The id of the movie you want the parental
    * quides on.
-   * @returns {Promise<Response, undefined>} - An object with the parental
-   * guide.
+   * @returns {Promise<Response, Error>} - An object with the parental guide.
    */
   getParentalGuides(movieId) {
     if (!movieId || typeof movieId !== 'number') {

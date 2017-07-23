@@ -20,6 +20,7 @@ describe('YtsApi', () => {
   before(() => {
     // Disable the warn logging function to testing.
     console.warn = () => {}
+
     yts = new YtsApi({
       debug: true
     })
