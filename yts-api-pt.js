@@ -141,9 +141,9 @@ module.exports = class YtsApi {
   }
 
   /**   * Make a get request to yts.ag.   * @param {!string} endpoint - The endpoint to make the request to.   * @param {!Object} [query] - The querystring for the request.
-   * @returns {Promise<Response, Error>} - The response body wrapped in   * cheerio.   */  _get(endpoint, query) {    const url = `${this._baseUrl}${endpoint}`
-    if (this._debug) {      console.warn(`Making request to: '${url}?${stringify(query)}'`)    }
-    return got.get(`${this._baseUrl}/${endpoint}`, {
+   * @returns {Promise<Response, Error>} - The response body wrapped in   * cheerio.   */  _get(endpoint, query) {    const uri = `${this._baseUrl}${endpoint}`
+    if (this._debug) {      console.warn(`Making request to: '${uri}?${stringify(query)}'`)    }
+    return got.get(uri, {
       query,
       json: true
     }).then(({body}) => body)
