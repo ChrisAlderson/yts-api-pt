@@ -209,7 +209,7 @@ describe('YtsApi', () => {
   })
 
   /** @test {YtsApi#getParentalGuides} */
-  it('should throw an error when getting the parental guide of a movie', () => {
+  it('should throw an error getting the parental guide of a movie', () => {
     expect(yts.getParentalGuides).to.throw('is not a valid value for movieId!')
   })
 })

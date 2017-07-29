@@ -6,87 +6,87 @@ const { stringify } = require('querystring')
 /**
  * A response object from yts.ag.
  * @typedef {Object} Response
- * @property {!string} status The status of the response.
- * @property {!string} status_message The status message of the response.
- * @property {!Data} data The data of the response.
- * @property {!Meta} @meta The metadata of the response.
+ * @property {string} status The status of the response.
+ * @property {string} status_message The status message of the response.
+ * @property {Data} data The data of the response.
+ * @property {Meta} @meta The metadata of the response.
  */
 
 /**
  * The data object from yts.ag.
  * @typedef {Object} Data
- * @property {?number} [movie_count] The movie count of the data.
- * @property {?number} [limit] The limit of the data.
- * @property {?number} [page_number] The page number of the data.
- * @property {?Array<Movie>} [movies] The movies of the data
- * @property {?Movie} [movie] The movie of the data
- * @property {?number} [parental_guide_count] The parental guide count of the
+ * @property {number} [movie_count] The movie count of the data.
+ * @property {number} [limit] The limit of the data.
+ * @property {number} [page_number] The page number of the data.
+ * @property {Array<Movie>} [movies] The movies of the data
+ * @property {Movie} [movie] The movie of the data
+ * @property {number} [parental_guide_count] The parental guide count of the
  * data.
- * @property {?Array<ParentalGuide>} [parental_guides] The parental guides of
+ * @property {Array<ParentalGuide>} [parental_guides] The parental guides of
  * the data.
  */
 
 /**
  * A movie from yts.ag.
  * @typedef {Object} Movie
- * @property {!number} id The id of the movie.
- * @property {!string} url The url of the movie.
- * @property {!string} imdb_code The imdb code fo the movie.
- * @property {!string} title The title of the movie.
- * @property {!string} title_english The english title of the movie.
- * @property {!string} title_long The long title of the movie.
- * @property {!string} slug The slug of the movie.
- * @property {!number} year The year the movies was released.
- * @property {!number} rating The rating of the movie.
- * @property {!number} runtime The rumtime of the movie.
- * @property {!Array<string>} genres The genres of the movie.
- * @property {!string} summary The summary of the movie.
- * @property {!string} description_full The full description of the movie.
- * @property {!string} synopsis The synopsis of the movie.
- * @property {!string} yt_trailer_code The YT trailer code of the movie.
- * @property {!string} languagei The language of the movie.
- * @property {!string} mpa_rating The MPA rating of the movie.
- * @property {!string} background_image The background image of the movie.
- * @property {!string} background_image_original The original background image
+ * @property {number} id The id of the movie.
+ * @property {string} url The url of the movie.
+ * @property {string} imdb_code The imdb code fo the movie.
+ * @property {string} title The title of the movie.
+ * @property {string} title_english The english title of the movie.
+ * @property {string} title_long The long title of the movie.
+ * @property {string} slug The slug of the movie.
+ * @property {number} year The year the movies was released.
+ * @property {number} rating The rating of the movie.
+ * @property {number} runtime The rumtime of the movie.
+ * @property {Array<string>} genres The genres of the movie.
+ * @property {string} summary The summary of the movie.
+ * @property {string} description_full The full description of the movie.
+ * @property {string} synopsis The synopsis of the movie.
+ * @property {string} yt_trailer_code The YT trailer code of the movie.
+ * @property {string} languagei The language of the movie.
+ * @property {string} mpa_rating The MPA rating of the movie.
+ * @property {string} background_image The background image of the movie.
+ * @property {string} background_image_original The original background image
  * of the movie.
- * @property {!string} small_cover_image The small image cover of the movie.
- * @property {!string} medium_covder_image The medium image cover of the movie.
- * @property {!string} large_cover_image The large image cover of the movie.
- * @property {!string} state The state of the movie.
- * @property {!Array<Torrent>} torrents The torrents of the movie.
- * @property {!string} date_uploaded The date the movie was uploaded.
- * @property {!number} date_uploaded_unix The date the movie was uploaded in
+ * @property {string} small_cover_image The small image cover of the movie.
+ * @property {string} medium_covder_image The medium image cover of the movie.
+ * @property {string} large_cover_image The large image cover of the movie.
+ * @property {string} state The state of the movie.
+ * @property {Array<Torrent>} torrents The torrents of the movie.
+ * @property {string} date_uploaded The date the movie was uploaded.
+ * @property {number} date_uploaded_unix The date the movie was uploaded in
  * unix format.
  */
 
 /**
  * A torrent from yts.ag.
  * @typedef {Object} Torrent
- * @property {!string} url The url to the torrent.
- * @property {!string} hash The hash of the torrent.
- * @property {!string} quality The quality of the torrent.
- * @property {!number} seeds The amount of seeds of the torrent.
- * @property {!number} peers The amount of peers of the torrent.
- * @property {!string} size The size of the torrent.
- * @property {!number} size_bytes The size of the torrent in bytes.
- * @property {!string} date_uploaded The data uploaded.
- * @property {!number} date_uploaded_unix The date uploaded in unix time.
+ * @property {string} url The url to the torrent.
+ * @property {string} hash The hash of the torrent.
+ * @property {string} quality The quality of the torrent.
+ * @property {number} seeds The amount of seeds of the torrent.
+ * @property {number} peers The amount of peers of the torrent.
+ * @property {string} size The size of the torrent.
+ * @property {number} size_bytes The size of the torrent in bytes.
+ * @property {string} date_uploaded The data uploaded.
+ * @property {number} date_uploaded_unix The date uploaded in unix time.
  */
 
 /**
  * The meta object from yts.ag.
  * @typedef {Object} Meta
- * @property {!number} server_time The server time of the api.
- * @property {!string} server_timezone The server timezone of the api.
- * @property {!number} api_version The api version.
- * @property {!string} execution_time The execution time of the reponse.
+ * @property {number} server_time The server time of the api.
+ * @property {string} server_timezone The server timezone of the api.
+ * @property {number} api_version The api version.
+ * @property {string} execution_time The execution time of the reponse.
  */
 
 /**
  * The parental guide object from yts.ag
  * @typedef {Object} ParentalGuide
- * @property {!string} type The type of the parental guide.
- * @property {!string} parental_guide_text The parental guide text.
+ * @property {string} type The type of the parental guide.
+ * @property {string} parental_guide_text The parental guide text.
  */
 
 /**
@@ -185,7 +185,9 @@ module.exports = class YtsApi {
     }
 
     if (minimumRating < 0 || minimumRating > 9) {
-      throw new Error(`${minimumRating} is not a valid value for minimumRating!`)
+      throw new Error(
+        `${minimumRating} is not a valid value for minimumRating!`
+      )
     }
 
     if (!YtsApi._sortBy[sortyBy]) {
@@ -197,7 +199,9 @@ module.exports = class YtsApi {
     }
 
     if (typeof withRtRatings !== 'boolean') {
-      throw new Error(`${withRtRatings} is not a valid value for withRtRatings!`)
+      throw new Error(
+        `${withRtRatings} is not a valid value for withRtRatings!`
+      )
     }
 
     return this._get('list_movies.json', {

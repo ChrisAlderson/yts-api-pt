@@ -20,8 +20,8 @@ const YtsApi = require('eztv-api-pt')
 
 // Create a new instance of the module.
 const yts = new YtsApi({
-  baseUrl, // The base url of yts. Defaults to 'https://yts.ag/'
-  debug // Show extra output. Defaults to 'false'
+  baseUrl, // The base url of yts. Defaults to 'https://yts.ag/'.
+  debug // Show extra output. Defaults to 'false'.
 })
 ```
 
