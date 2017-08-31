@@ -1,8 +1,7 @@
-'use strict'
-
-/* eslint-disable no-unused-expressions */
 // Import the necessary modules.
+/* eslint-disable no-unused-expressions */
 const { expect } = require('chai')
+
 const YtsApi = require('../yts-api-pt')
 
 /** @test {YtsApi} */
@@ -18,12 +17,7 @@ describe('YtsApi', () => {
    * @type {Function}
    */
   before(() => {
-    // Disable the warn logging function to testing.
-    console.warn = () => {}
-
-    yts = new YtsApi({
-      debug: true
-    })
+    yts = new YtsApi()
   })
 
   /**
@@ -40,7 +34,7 @@ describe('YtsApi', () => {
 
   /**
    * Test the meta attributes.
-   * @param {Object} res - The meta to test.
+   * @param {Object} meta - The meta to test.
    * @return {undefined}
    */
   function testMetaAttributes(meta) {

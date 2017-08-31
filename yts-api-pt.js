@@ -1,7 +1,9 @@
-'use strict'
-
-// Import the necessary modules.const got = require('got')
+// Import the necessary modules.
+const debug = require('debug')
+const got = require('got')
 const { stringify } = require('querystring')
+
+const { name } = require('./package')
 
 /**
  * A response object from yts.ag.
@@ -99,11 +101,18 @@ module.exports = class YtsApi {
    * Create a new instance of the module.
    * @param {!Object} config={} - The configuration object for the module.
    * @param {!string} baseUrl=https://yts.ag/api/v2/ - The base url of yts.
-   * @param {?boolean} [debug=false] - Show extra output.
    */
-  constructor({baseUrl = 'https://yts.ag/api/v2/', debug = false} = {}) {
-    /**     * The base url of yts.     * @type {string}     */    this._baseUrl = baseUrl
-    /**     * Show extra output.     * @type {boolean}     */    this._debug = debug
+  constructor({baseUrl = 'https://yts.ag/api/v2/'} = {}) {
+    /**
+     * The base url of yts.
+     * @type {string}
+     */
+    this._baseUrl = baseUrl
+    /**
+     * Show extra output.
+     * @type {Function}
+     */
+    this._debug = debug(name)
     /**
      * The available qualities for movies.
      * @type Object
@@ -114,7 +123,6 @@ module.exports = class YtsApi {
       '1080p': '1080p',
       '3D': '3D'
     }
-
     /**
      * The available properties to sort by.
      * @type {Object}
@@ -129,7 +137,6 @@ module.exports = class YtsApi {
       like_count: 'like_count',
       date_added: 'date_added'
     }
-
     /**
      * The available ways to sort.
      * @type {Object}
@@ -140,13 +147,21 @@ module.exports = class YtsApi {
     }
   }
 
-  /**   * Make a get request to yts.ag.   * @param {!string} endpoint - The endpoint to make the request to.   * @param {!Object} [query] - The querystring for the request.
-   * @returns {Promise<Response, Error>} - The response body wrapped in   * cheerio.   */  _get(endpoint, query) {    const uri = `${this._baseUrl}${endpoint}`
-    if (this._debug) {      console.warn(`Making request to: '${uri}?${stringify(query)}'`)    }
+  /**
+   * Make a get request to yts.ag
+   * @param {!string} endpoint - The endpoint to make the request to.
+   * @param {!Object} [query] - The querystring for the request.
+   * @returns {Promise<Response, Error>} - The response body wrapped in
+   * cheerio.
+   */
+  _get(endpoint, query) {
+    const uri = `${this._baseUrl}${endpoint}`
+    this._debug(`Making request to: '${uri}?${stringify(query)}'`)
+
     return got.get(uri, {
       query,
       json: true
-    }).then(({body}) => body)
+    }).then(({ body }) => body)
   }
   /**
    * Get a list of movies.
@@ -179,25 +194,20 @@ module.exports = class YtsApi {
     if (limit < 1 || limit > 50) {
       throw new Error(`${limit} is not a valid value for limit!`)
     }
-
     if (!YtsApi._qualities[quality]) {
       throw new Error(`${quality} is not a valid value for quality!`)
     }
-
     if (minimumRating < 0 || minimumRating > 9) {
       throw new Error(
         `${minimumRating} is not a valid value for minimumRating!`
       )
     }
-
     if (!YtsApi._sortBy[sortyBy]) {
       throw new Error(`${sortyBy} is not a valid value for sortyBy!`)
     }
-
     if (!YtsApi._orderBy[orderBy]) {
       throw new Error(`${orderBy} is not a valid value for orderBy!`)
     }
-
     if (typeof withRtRatings !== 'boolean') {
       throw new Error(
         `${withRtRatings} is not a valid value for withRtRatings!`
@@ -230,11 +240,9 @@ module.exports = class YtsApi {
     if (!movieId || typeof movieId !== 'number') {
       throw new Error(`${movieId} is not a valid value for movieId!`)
     }
-
     if (typeof withImages !== 'boolean') {
       throw new Error(`${withImages} is not a valid value for withImages!`)
     }
-
     if (typeof withCast !== 'boolean') {
       throw new Error(`${withCast} is not a valid value for withCast!`)
     }
