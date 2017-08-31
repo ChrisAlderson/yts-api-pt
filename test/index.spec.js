@@ -95,28 +95,28 @@ describe('YtsApi', () => {
 
   /** @test {YtsApi#getMovies} */
   it('should throw an error when getting movies', () => {
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       limit: -1
     })).to.throw('-1 is not a valid value for limit!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       limit: 51
     })).to.throw('51 is not a valid value for limit!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       quality: 'failing'
     })).to.throw('failing is not a valid value for quality!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       minimumRating: -1
     })).to.throw('-1 is not a valid value for minimumRating!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       minimumRating: 10
     })).to.throw('10 is not a valid value for minimumRating!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       sortyBy: 'failing'
     })).to.throw('failing is not a valid value for sortyBy!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       orderBy: 'failing'
     })).to.throw('failing is not a valid value for orderBy!')
-    expect(yts.getMovies.bind(yts.getMovies, {
+    expect(yts.getMovies.bind(yts, {
       withRtRatings: 'failing'
     })).to.throw('failing is not a valid value for withRtRatings!')
   })
@@ -145,14 +145,14 @@ describe('YtsApi', () => {
 
   /** @test {YtsApi#getMovie} */
   it('should throw an error when getting a movie', () => {
-    expect(yts.getMovie.bind(yts.getMovie, {
+    expect(yts.getMovie.bind(yts, {
       movieId: 'failing'
     })).to.throw('failing is not a valid value for movieId!')
-    expect(yts.getMovie.bind(yts.getMovie, {
+    expect(yts.getMovie.bind(yts, {
       movieId: 15,
       withImages: 'failing'
     })).to.throw('failing is not a valid value for withImages!')
-    expect(yts.getMovie.bind(yts.getMovie, {
+    expect(yts.getMovie.bind(yts, {
       movieId: 15,
       withImages: true,
       withCast: 'failing'
@@ -180,7 +180,8 @@ describe('YtsApi', () => {
 
   /** @test {YtsApi#getSuggestions} */
   it('should throw an error when getting the suggestions of a movie', () => {
-    expect(yts.getSuggestions).to.throw('is not a valid value for movieId!')
+    expect(yts.getSuggestions.bind(yts))
+      .to.throw('is not a valid value for movieId!')
   })
 
   /** @test {YtsApi#getParentalGuides} */
@@ -204,6 +205,7 @@ describe('YtsApi', () => {
 
   /** @test {YtsApi#getParentalGuides} */
   it('should throw an error getting the parental guide of a movie', () => {
-    expect(yts.getParentalGuides).to.throw('is not a valid value for movieId!')
+    expect(yts.getParentalGuides.bind(yts))
+      .to.throw('is not a valid value for movieId!')
   })
 })

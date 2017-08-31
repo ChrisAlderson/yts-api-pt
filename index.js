@@ -161,18 +161,22 @@ module.exports = class YtsApi {
       query,
       json: true
     }).then(({ body }) => body)
-  }
+  }
+
   /**
    * Make a get request to yts.ag
    * @param {!string} endpoint - The endpoint to make the request to.
    * @param {!number} movieId - The movie id of the movie you want to get.
-   * @param {!Object} [opts] - The additional options for the request.
    * @returns {Promise<Response, Error>} - The response body.
    */
-  _getWithMovieId(endpoint, movieId, opts) {
-    return this._get(endpoint, Object.assign({}, {
+  _getWithMovieId(endpoint, movieId) {
+    if (!movieId || typeof movieId !== 'number') {
+      throw new Error(`${movieId} is not a valid value for movieId!`)
+    }
+
+    return this._get(endpoint, {
       movie_id: movieId
-    }, opts))
+    })
   }
 
   /**
@@ -259,7 +263,8 @@ module.exports = class YtsApi {
       throw new Error(`${withCast} is not a valid value for withCast!`)
     }
 
-    return this._getWithMovieId('movie_details.json', movieId, {
+    return this._get('movie_details.json', {
+      movie_id: movieId,
       with_images: withImages,
       with_cast: withCast
     })
@@ -271,10 +276,6 @@ module.exports = class YtsApi {
    * @returns {Promise<Response, Error>} - An object with suggested movies.
    */
   getSuggestions(movieId) {
-    if (!movieId || typeof movieId !== 'number') {
-      throw new Error(`${movieId} is not a valid value for movieId!`)
-    }
-
     return this._getWithMovieId('movie_suggestions.json', movieId)
   }
 
@@ -285,10 +286,6 @@ module.exports = class YtsApi {
    * @returns {Promise<Response, Error>} - An object with the parental guide.
    */
   getParentalGuides(movieId) {
-    if (!movieId || typeof movieId !== 'number') {
-      throw new Error(`${movieId} is not a valid value for movieId!`)
-    }
-
     return this._getWithMovieId('movie_parental_guides.json', movieId)
   }
 
