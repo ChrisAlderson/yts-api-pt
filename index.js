@@ -151,8 +151,7 @@ module.exports = class YtsApi {
    * Make a get request to yts.ag
    * @param {!string} endpoint - The endpoint to make the request to.
    * @param {!Object} [query] - The querystring for the request.
-   * @returns {Promise<Response, Error>} - The response body wrapped in
-   * cheerio.
+   * @returns {Promise<Response, Error>} - The response body.
    */
   _get(endpoint, query) {
     const uri = `${this._baseUrl}${endpoint}`
@@ -163,6 +162,19 @@ module.exports = class YtsApi {
       json: true
     }).then(({ body }) => body)
   }
+  /**
+   * Make a get request to yts.ag
+   * @param {!string} endpoint - The endpoint to make the request to.
+   * @param {!number} movieId - The movie id of the movie you want to get.
+   * @param {!Object} [opts] - The additional options for the request.
+   * @returns {Promise<Response, Error>} - The response body.
+   */
+  _getWithMovieId(endpoint, movieId, opts) {
+    return this._get(endpoint, Object.assign({}, {
+      movie_id: movieId
+    }, opts))
+  }
+
   /**
    * Get a list of movies.
    * @param {!Object} query={} - The query object to be send to yts.
@@ -247,8 +259,7 @@ module.exports = class YtsApi {
       throw new Error(`${withCast} is not a valid value for withCast!`)
     }
 
-    return this._get('movie_details.json', {
-      movie_id: movieId,
+    return this._getWithMovieId('movie_details.json', movieId, {
       with_images: withImages,
       with_cast: withCast
     })
@@ -264,9 +275,7 @@ module.exports = class YtsApi {
       throw new Error(`${movieId} is not a valid value for movieId!`)
     }
 
-    return this._get('movie_suggestions.json', {
-      movie_id: movieId
-    })
+    return this._getWithMovieId('movie_suggestions.json', movieId)
   }
 
   /**
@@ -280,9 +289,7 @@ module.exports = class YtsApi {
       throw new Error(`${movieId} is not a valid value for movieId!`)
     }
 
-    return this._get('movie_parental_guides.json', {
-      movie_id: movieId
-    })
+    return this._getWithMovieId('movie_parental_guides.json', movieId)
   }
 
 }
