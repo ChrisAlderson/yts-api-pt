@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai')
 
-const YtsApi = require('../yts-api-pt')
+const YtsApi = require('..')
 
 /** @test {YtsApi} */
 describe('YtsApi', () => {

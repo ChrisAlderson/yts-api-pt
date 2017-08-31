@@ -1,6 +1,6 @@
 // Import the necessary modules.
 /* eslint-disable no-console */
-const YtsApi = require('../yts-api-pt')
+const YtsApi = require('..')
 
 // Create a new instance of the module.
 const yts = new YtsApi()
