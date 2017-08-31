@@ -20,8 +20,7 @@ const YtsApi = require('eztv-api-pt')
 
 // Create a new instance of the module.
 const yts = new YtsApi({
-  baseUrl, // The base url of yts. Defaults to 'https://yts.ag/'.
-  debug // Show extra output. Defaults to 'false'.
+  baseUrl // The base url of yts. Defaults to 'https://yts.ag/'.
 })
 ```
 
@@ -33,23 +32,21 @@ yts.getMovies({
   limit: 20,
   page: 1,
   quality: 'All',
-  minimum_rating: 0,
-  query_term: 'inception',
-  genre: 'All',
-  sort_by: 'date_added',
-  order_by: 'desc',
-  with_rt_ratings: true
-}).then(res => console.log(res))
-  .catch(err => console.error(err))
-
+  minimumRating: 0,
+  queryTerm: 'inception',
+  genre: 'action',
+  sortBy: 'date_added',
+  orderBy: 'desc',
+  withRtRatings: true
+})
 ```
 
 **getMovie:**
 ```js
 yts.getMovie({
-  movie_id: 15,
-  with_images: true,
-  with_cast: true
+  movieId: 15,
+  withImages: true,
+  withCast: true
 }).then(res => console.log(res))
   .catch(err => console.error(err))
 ```
