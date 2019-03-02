@@ -25,12 +25,21 @@ npm install --save yts-api-pt
 
 #### Initialize
 ```js
-const YtsApi = require('eztv-api-pt')
+const YtsApi = require('yts-api-pt');
 
 // Create a new instance of the module.
 const yts = new YtsApi({
   baseUrl // The base url of yts. Defaults to 'https://yts.ag/'.
-})
+});
+```
+or
+
+```js
+const YtsApi = require('yts-api-pt');
+
+// Create a new instance of the module.
+const yts = new YtsApi();
+
 ```
 
 #### Example usage
